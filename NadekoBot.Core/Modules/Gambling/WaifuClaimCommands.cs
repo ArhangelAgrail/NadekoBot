@@ -36,14 +36,19 @@ namespace NadekoBot.Modules.Gambling
             [RequireContext(ContextType.Guild)]
             public async Task About([Remainder] string info = null)
             {
-                var success = await _service.SetInfo(Context.User, info);
-                if (success)
-                {
-                    await ReplyConfirmLocalized("info_success");
-                    return;
-                }
+                if (info.Length > 70)
+                    await ReplyErrorLocalized("info_not_success");
                 else
-                    await ReplyConfirmLocalized("info_not_success");
+                {
+                    var success = await _service.SetInfo(Context.User, info);
+                    if (success)
+                    {
+                        await ReplyConfirmLocalized("info_success");
+                        return;
+                    }
+                    else
+                        await ReplyErrorLocalized("info_not_success");
+                }
             }
 
             [NadekoCommand, Usage, Description, Aliases]
@@ -306,6 +311,8 @@ namespace NadekoBot.Modules.Gambling
                 var affInfo = _service.GetAffinityTitle(wi.AffinityCount);
                 var club = _service.GetClubName(target);
 
+                var time = DateTime.UtcNow - target.JoinedAt;
+
                 string clubName = "-";
                 if (club != null)
                     clubName = club.Name;
@@ -328,15 +335,18 @@ namespace NadekoBot.Modules.Gambling
                 var embed = new EmbedBuilder()
                     .WithColor(16738816)
                     .WithAuthor(name: GetText("waifu") + " " + wi.FullName + " - \"" + GetText(_service.GetRepTitle(wi.Reputation)) + "\"", iconUrl: target.GetAvatarUrl())
-                    .AddField(efb => efb.WithName(GetText("price")).WithValue(wi.Price.ToString() + " :cherry_blossom:").WithIsInline(true))
-                    .AddField(efb => efb.WithName(GetText("claimed_by")).WithValue(wi.ClaimerName ?? nobody).WithIsInline(true))
-                    .AddField(efb => efb.WithName(GetText("likes")).WithValue(wi.AffinityName ?? nobody).WithIsInline(true))
-                    .AddField(efb => efb.WithName(GetText("changes_of_heart")).WithValue($"{wi.AffinityCount} - \"{GetText(affInfo)}\"").WithIsInline(true))
-                    .AddField(efb => efb.WithName(GetText("club")).WithValue(clubName).WithIsInline(true))
+                    .AddField(efb => efb.WithName(GetText("price")).WithValue(wi.Price.ToString() + Bc.BotConfig.CurrencySign).WithIsInline(true))
+                    //.AddField(efb => efb.WithName(GetText("claimed_by")).WithValue(wi.ClaimerName ?? nobody).WithIsInline(true))
+                    //.AddField(efb => efb.WithName(GetText("likes")).WithValue(wi.AffinityName ?? nobody).WithIsInline(true))
+                    //.AddField(efb => efb.WithName(GetText("changes_of_heart")).WithValue($"{wi.AffinityCount} - \"{GetText(affInfo)}\"").WithIsInline(true))
+                    //.AddField(efb => efb.WithName(GetText("club")).WithValue(clubName).WithIsInline(true))
                     .AddField(efb => efb.WithName(GetText("reputation")).WithValue("**+" + wi.Reputation.ToString() + "**").WithIsInline(true))
+                    .AddField(efb => efb.WithName(GetText("on_server")).WithValue(time.Value.Days + GetText("days")).WithIsInline(true))
                     .AddField(efb => efb.WithName(GetText("gifts")).WithValue(itemsStr).WithIsInline(true))
-                    .AddField(efb => efb.WithName(GetText("Waifus", wi.ClaimCount)).WithValue(wi.ClaimCount == 0 ? nobody + "\n_______" : string.Join("\n", wi.Claims30) + "\n_______").WithIsInline(false))
-                    .WithFooter(text: GetText("info") + " " + info, iconUrl: "http://www.picshare.ru/uploads/181213/sK6tzE73ub.png");
+                    .AddField(efb => efb.WithName(GetText("roles", target.RoleIds.Count - 1)).WithValue($"{string.Join("\n", target.GetRoles().Take(10).Where(r => r.Id != r.Guild.EveryoneRole.Id).Select(r => { var id = r.Id; return $"<@&{id}>"; })).SanitizeMentions()}").WithIsInline(true))
+                    //.AddField(efb => efb.WithName(GetText("Waifus", wi.ClaimCount)).WithValue(wi.ClaimCount == 0 ? nobody + "\n_______" : string.Join("\n", wi.Claims30) + "\n_______").WithIsInline(false))
+                    .WithTitle(info);
+                    //.WithFooter(text: GetText("info") + " " + info, iconUrl: "http://www.picshare.ru/uploads/181213/sK6tzE73ub.png");
 
                 await Context.Channel.EmbedAsync(embed).ConfigureAwait(false);
             }
