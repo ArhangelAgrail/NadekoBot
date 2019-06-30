@@ -2442,7 +2442,7 @@
     ]
   },
   "waifuleaderboard": {
-    "Cmd": "waifus waifulb",
+    "Cmd": "waifus waifulb herolb glory",
     "Desc": "Shows top 9 waifus. You can specify another page to show other waifus.",
     "Usage": [
       "{0}waifus",
@@ -2457,7 +2457,7 @@
     ]
   },
   "waifuinfo": {
-    "Cmd": "waifuinfo waifustats waifu",
+    "Cmd": "waifuinfo waifustats waifu hero",
     "Desc": "Shows waifu stats for a target person. Defaults to you if no user is provided.",
     "Usage": [
       "{0}waifuinfo @MyCrush or {0}waifu UserName#000",
