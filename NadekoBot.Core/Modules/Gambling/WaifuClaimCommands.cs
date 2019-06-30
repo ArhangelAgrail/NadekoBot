@@ -371,7 +371,7 @@ namespace NadekoBot.Modules.Gambling
                                         .OrderBy(x => x.Price)
                                         .Skip(9 * cur)
                                         .Take(9)
-                                        .ForEach(x => embed.AddField(f => f.WithName(x.ItemEmoji + " " + x.Item.ToString()).WithValue(x.Price).WithIsInline(true)));
+                                        .ForEach(x => embed.AddField(f => f.WithName(x.ItemEmoji + " " + GetText(x.Item.ToString())).WithValue(x.Price).WithIsInline(true)));
 
                     return embed;
                 }, Enum.GetValues(typeof(WaifuItem.ItemName)).Length, 9);
@@ -390,7 +390,7 @@ namespace NadekoBot.Modules.Gambling
 
                 if (sucess)
                 {
-                    await ReplyConfirmLocalized("waifu_gift", Format.Bold(item.ToString() + " " + itemObj.ItemEmoji), Format.Bold(waifu.ToString()));
+                    await ReplyConfirmLocalized("waifu_gift", Format.Bold(GetText(item.ToString()) + " " + itemObj.ItemEmoji), Format.Bold(waifu.ToString()));
                 }
                 else
                 {

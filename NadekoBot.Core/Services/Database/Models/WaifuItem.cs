@@ -11,20 +11,20 @@ namespace NadekoBot.Core.Services.Database.Models
 
         public enum ItemName
         {
-            Cookie,
-            Candy,
-            Donut,
-            Rose,
-            Bouquet,
+            Banana,
+            Medal,
+            Dagger,
+            Shield,
+            Alien,
             Tea,
             Coffee,
             Pizza,
             Chocolate,
-            Ramen,
-            Sake,
-            Sushi,
-            Icecream,
-            Christmas,
+            Rooster,
+            Horse,
+            Clover,
+            Moneybag,
+            Swords,
             Surprise,
             Manga,
             Cake,
@@ -66,20 +66,20 @@ namespace NadekoBot.Core.Services.Database.Models
             WaifuItem wi;
             switch (itemName)
             {
-                case ItemName.Cookie:
-                    wi = new WaifuItem("🍪", 10, itemName);
+                case ItemName.Banana:
+                    wi = new WaifuItem("🍌", 10, itemName);
                     break;
-                case ItemName.Candy:
-                    wi = new WaifuItem("🍬", 20, itemName);
+                case ItemName.Medal:
+                    wi = new WaifuItem("🏅", 20, itemName);
                     break;
-                case ItemName.Donut:
-                    wi = new WaifuItem("🍩", 30, itemName);
+                case ItemName.Dagger:
+                    wi = new WaifuItem("🗡️", 30, itemName);
                     break;
-                case ItemName.Rose:
-                    wi = new WaifuItem("🌹", 50, itemName);
+                case ItemName.Shield:
+                    wi = new WaifuItem("🛡️", 50, itemName);
                     break;
-                case ItemName.Bouquet:
-                    wi = new WaifuItem("💐", 70, itemName);
+                case ItemName.Alien:
+                    wi = new WaifuItem("👾", 70, itemName);
                     break;
                 case ItemName.Tea:
                     wi = new WaifuItem("🍵", 100, itemName);
@@ -93,17 +93,17 @@ namespace NadekoBot.Core.Services.Database.Models
                 case ItemName.Chocolate:
                     wi = new WaifuItem("🍫", 200, itemName);
                     break;
-                case ItemName.Ramen:
-                    wi = new WaifuItem("🍜", 200, itemName);
+                case ItemName.Rooster:
+                    wi = new WaifuItem("🐓", 200, itemName);
                     break;
-                case ItemName.Icecream:
-                    wi = new WaifuItem("🍨", 200, itemName);
+                case ItemName.Moneybag:
+                    wi = new WaifuItem("💰", 200, itemName);
                     break;
-                case ItemName.Sake:
-                    wi = new WaifuItem("🍶", 300, itemName);
+                case ItemName.Horse:
+                    wi = new WaifuItem("🐎", 300, itemName);
                     break;
-                case ItemName.Sushi:
-                    wi = new WaifuItem("🍣", 400, itemName);
+                case ItemName.Clover:
+                    wi = new WaifuItem("🍀", 400, itemName);
                     break;
                 case ItemName.Surprise:
                     wi = new WaifuItem("🎁", 500, itemName);
@@ -117,8 +117,8 @@ namespace NadekoBot.Core.Services.Database.Models
                 case ItemName.Cake:
                     wi = new WaifuItem("🍰", 1000, itemName);
                     break;
-                case ItemName.Christmas:
-                    wi = new WaifuItem("🎄", 1300, itemName);
+                case ItemName.Swords:
+                    wi = new WaifuItem("⚔️", 1300, itemName);
                     break;
                 case ItemName.Spider:
                     wi = new WaifuItem("🕷️", 1500, itemName);
