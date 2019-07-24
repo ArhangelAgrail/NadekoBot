@@ -85,7 +85,7 @@ namespace NadekoBot.Core.Services.Database.Models
             var waifuUsername = Username.TrimTo(20);
             var claimerUsername = Claimer?.TrimTo(20);
 
-            if (Claimer != null)
+            /*if (Claimer != null)
             {
                 claimer = $"{ claimerUsername }#{ClaimerDiscrim}";
             }
@@ -107,7 +107,9 @@ namespace NadekoBot.Core.Services.Database.Models
                 return $"**{waifuUsername}#{Discrim}** - {claimer} не присвоен\n\t{status}";
             }
             else
-                return $"**{waifuUsername}#{Discrim}** - присвоен **{claimer}**\n\t{status}";
+                return $"**{waifuUsername}#{Discrim}** - присвоен **{claimer}**\n\t{status}";*/
+
+            return $"**{waifuUsername}#{Discrim}**";
         }
     }
 }

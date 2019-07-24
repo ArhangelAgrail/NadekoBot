@@ -12,41 +12,42 @@ namespace NadekoBot.Core.Services.Database.Models
         public enum ItemName
         {
             Banana,
-            Medal,
-            Dagger,
-            Shield,
-            Alien,
             Tea,
             Coffee,
-            Pizza,
             Chocolate,
-            Rooster,
-            Horse,
-            Clover,
-            Moneybag,
-            Swords,
-            Surprise,
-            Manga,
+            Pizza,
             Cake,
+            Medal,
+            Rooster,
+            Surprise,
+            Clover,
+            Book,
+            LoveLetter,
             Spider,
             Snake,
-            LoveLetter,
+            Horse,
+            Moneybag,
             Mask,
+            Ring,
+            Dagger,
+            Shield,
+            Swords,
+            Alien,
+            Unicorn,
+            Diamond,
+            Crown,
+            Castle,
+            Dragon,
+            /*Manga,
             Guitar,
             Kimono,
             Iphone,
             Laptop,
-            Ring,
             Honor,
-            Diamond,
-            Crown,
-            Castle,
             Newcomer,
-            Unicorn,
-            Dragon,
             Star,
             Moon,
-            Love,
+            Love,*/
         }
 
         public WaifuItem()
@@ -69,71 +70,89 @@ namespace NadekoBot.Core.Services.Database.Models
                 case ItemName.Banana:
                     wi = new WaifuItem("🍌", 10, itemName);
                     break;
-                case ItemName.Medal:
-                    wi = new WaifuItem("🏅", 20, itemName);
-                    break;
-                case ItemName.Dagger:
-                    wi = new WaifuItem("🗡️", 30, itemName);
-                    break;
-                case ItemName.Shield:
-                    wi = new WaifuItem("🛡️", 50, itemName);
-                    break;
-                case ItemName.Alien:
-                    wi = new WaifuItem("👾", 70, itemName);
-                    break;
                 case ItemName.Tea:
-                    wi = new WaifuItem("🍵", 100, itemName);
+                    wi = new WaifuItem("🍵", 50, itemName);
                     break;
                 case ItemName.Coffee:
-                    wi = new WaifuItem("☕", 100, itemName);
+                    wi = new WaifuItem("☕", 50, itemName);
+                    break;
+                case ItemName.Chocolate:
+                    wi = new WaifuItem("🍫", 100, itemName);
                     break;
                 case ItemName.Pizza:
                     wi = new WaifuItem("🍕", 150, itemName);
                     break;
-                case ItemName.Chocolate:
-                    wi = new WaifuItem("🍫", 200, itemName);
+                case ItemName.Cake:
+                    wi = new WaifuItem("🍰", 200, itemName);
+                    break;
+                case ItemName.Medal:
+                    wi = new WaifuItem("🏅", 250, itemName);
                     break;
                 case ItemName.Rooster:
-                    wi = new WaifuItem("🐓", 200, itemName);
-                    break;
-                case ItemName.Moneybag:
-                    wi = new WaifuItem("💰", 200, itemName);
-                    break;
-                case ItemName.Horse:
-                    wi = new WaifuItem("🐎", 300, itemName);
-                    break;
-                case ItemName.Clover:
-                    wi = new WaifuItem("🍀", 400, itemName);
+                    wi = new WaifuItem("🐓", 300, itemName);
                     break;
                 case ItemName.Surprise:
-                    wi = new WaifuItem("🎁", 500, itemName);
+                    wi = new WaifuItem("🎁", 400, itemName);
+                    break;
+                case ItemName.Clover:
+                    wi = new WaifuItem("🍀", 500, itemName);
+                    break;
+                case ItemName.Book:
+                    wi = new WaifuItem("📖", 550, itemName);
                     break;
                 case ItemName.LoveLetter:
-                    wi = new WaifuItem("💌", 650, itemName);
-                    break;
-                case ItemName.Manga:
-                    wi = new WaifuItem("📓", 800, itemName);
-                    break;
-                case ItemName.Cake:
-                    wi = new WaifuItem("🍰", 1000, itemName);
-                    break;
-                case ItemName.Swords:
-                    wi = new WaifuItem("⚔️", 1300, itemName);
+                    wi = new WaifuItem("💌", 600, itemName);
                     break;
                 case ItemName.Spider:
-                    wi = new WaifuItem("🕷️", 1500, itemName);
+                    wi = new WaifuItem("🕷️", 700, itemName);
                     break;
                 case ItemName.Snake:
-                    wi = new WaifuItem("🐍", 1700, itemName);
+                    wi = new WaifuItem("🐍", 800, itemName);
+                    break;
+                case ItemName.Horse:
+                    wi = new WaifuItem("🐎", 900, itemName);
+                    break;
+                case ItemName.Moneybag:
+                    wi = new WaifuItem("💰", 1000, itemName);
                     break;
                 case ItemName.Mask:
-                    wi = new WaifuItem("👹", 3000, itemName);
+                    wi = new WaifuItem("👹", 1500, itemName);
+                    break;
+                case ItemName.Ring:
+                    wi = new WaifuItem("💍", 1700, itemName);
+                    break;
+                case ItemName.Dagger:
+                    wi = new WaifuItem("🗡️", 2500, itemName);
+                    break;
+                case ItemName.Shield:
+                    wi = new WaifuItem("🛡️", 2500, itemName);
+                    break;
+                case ItemName.Swords:
+                    wi = new WaifuItem("⚔️", 5000, itemName);
+                    break;
+                case ItemName.Alien:
+                    wi = new WaifuItem("👾", 9000, itemName);
+                    break;
+                case ItemName.Unicorn:
+                    wi = new WaifuItem("🦄", 10000, itemName);
+                    break;
+                case ItemName.Diamond:
+                    wi = new WaifuItem("💎", 15000, itemName);
+                    break;
+                case ItemName.Crown:
+                    wi = new WaifuItem("👑", 25000, itemName);
+                    break;
+                case ItemName.Castle:
+                    wi = new WaifuItem("🏰", 50000, itemName);
+                    break;
+                case ItemName.Dragon:
+                    wi = new WaifuItem("🐲", 99999, itemName);
+                    break;
+                /*case ItemName.Manga:
+                    wi = new WaifuItem("📓", 800, itemName);
                     break;
                 case ItemName.Guitar:
                     wi = new WaifuItem("🎸", 5000, itemName);
-                    break;
-                case ItemName.Kimono:
-                    wi = new WaifuItem("👘", 7000, itemName);
                     break;
                 case ItemName.Iphone:
                     wi = new WaifuItem("📱", 8000, itemName);
@@ -141,29 +160,11 @@ namespace NadekoBot.Core.Services.Database.Models
                 case ItemName.Laptop:
                     wi = new WaifuItem("💻", 10000, itemName);
                     break;
-                case ItemName.Ring:
-                    wi = new WaifuItem("💍", 15000, itemName);
-                    break;
                 case ItemName.Honor:
                     wi = new WaifuItem("🏅", 15000, itemName);
                     break;
-                case ItemName.Diamond:
-                    wi = new WaifuItem("💎", 20000, itemName);
-                    break;
-                case ItemName.Crown:
-                    wi = new WaifuItem("👑", 25000, itemName);
-                    break;
-                case ItemName.Castle:
-                    wi = new WaifuItem("🏰", 30000, itemName);
-                    break;
                 case ItemName.Newcomer:
                     wi = new WaifuItem("👾", 50000, itemName);
-                    break;
-                case ItemName.Unicorn:
-                    wi = new WaifuItem("🦄", 50000, itemName);
-                    break;
-                case ItemName.Dragon:
-                    wi = new WaifuItem("🐲", 50000, itemName);
                     break;
                 case ItemName.Star:
                     wi = new WaifuItem("🌟", 99999, itemName);
@@ -173,7 +174,7 @@ namespace NadekoBot.Core.Services.Database.Models
                     break;
                 case ItemName.Love:
                     wi = new WaifuItem("💝", 200000, itemName);
-                    break;
+                    break;*/
                 default:
                     throw new ArgumentException("Item is not implemented", nameof(itemName));
             }

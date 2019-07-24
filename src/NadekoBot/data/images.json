@@ -2,13 +2,13 @@
   "Version": 3,
   "Moderation": {
     "Warn": [
-      "http://www.picshare.ru/uploads/180924/e39rQvmJ8F.png"
+      "http://www.picshare.ru/uploads/190724/8223IWuruE.png"
     ],
     "Mute": [
-      "https://i.imgur.com/WwSs9Sb.png"
+      "http://www.picshare.ru/uploads/190724/wg50c0SXt3.png"
     ],
     "Ban": [
-      "https://i.imgur.com/xOPg9fg.png"
+      "http://www.picshare.ru/uploads/190724/8vkknDJJZH.png"
     ],
     "Kick": [
       "https://i.imgur.com/blfT0QY.png"
@@ -16,10 +16,10 @@
   },
   "Coins": {
     "Heads": [
-      "https://nadeko-pictures.nyc3.digitaloceanspaces.com/other/coins/heads.png"
+      "http://www.picshare.ru/uploads/190718/q9at6Q6mW0.png"
     ],
     "Tails": [
-      "https://nadeko-pictures.nyc3.digitaloceanspaces.com/other/coins/tails.png"
+      "http://www.picshare.ru/uploads/190718/78QlSqsd95.png"
     ]
   },
   "Currency": [
@@ -56,7 +56,7 @@
       "https://nadeko-pictures.nyc3.digitaloceanspaces.com/other/slots/emojis/2.png",
       "https://nadeko-pictures.nyc3.digitaloceanspaces.com/other/slots/emojis/3.png",
       "https://nadeko-pictures.nyc3.digitaloceanspaces.com/other/slots/emojis/4.png",
-      "https://nadeko-pictures.nyc3.digitaloceanspaces.com/other/slots/emojis/5.png"
+      "http://www.picshare.ru/uploads/190724/NdZc794IE1.png"
     ],
     "Numbers": [
       "https://nadeko-pictures.nyc3.digitaloceanspaces.com/other/slots/numbers/0.png",
@@ -70,6 +70,6 @@
       "https://nadeko-pictures.nyc3.digitaloceanspaces.com/other/slots/numbers/8.png",
       "https://nadeko-pictures.nyc3.digitaloceanspaces.com/other/slots/numbers/9.png"
     ],
-    "Bg": "https://nadeko-pictures.nyc3.digitaloceanspaces.com/other/slots/bg.png"
+    "Bg": "http://www.picshare.ru/uploads/190724/GS812GWMNw.png"
   }
 }

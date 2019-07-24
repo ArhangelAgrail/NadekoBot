@@ -598,39 +598,39 @@ namespace NadekoBot.Modules.Gambling.Services
                 title = ClaimTitle.Status6;
             else if (count < 200)
                 title = ClaimTitle.Status7;
-            else if (count < 300)
+            else if (count < 250)
                 title = ClaimTitle.Status8;
-            else if (count < 350)
+            else if (count < 300)
                 title = ClaimTitle.Status9;
-            else if (count < 400)
+            else if (count < 350)
                 title = ClaimTitle.Status10;
-            else if (count < 500)
+            else if (count < 400)
                 title = ClaimTitle.Status11;
-            else if (count < 600)
+            else if (count < 450)
                 title = ClaimTitle.Status12;
-            else if (count < 700)
+            else if (count < 500)
                 title = ClaimTitle.Status13;
-            else if (count < 750)
+            else if (count < 550)
                 title = ClaimTitle.Status14;
-            else if (count < 800)
+            else if (count < 600)
                 title = ClaimTitle.Status15;
-            else if (count < 900)
+            else if (count < 650)
                 title = ClaimTitle.Status16;
-            else if (count < 1000)
+            else if (count < 700)
                 title = ClaimTitle.Status17;
-            else if (count < 1100)
+            else if (count < 750)
                 title = ClaimTitle.Status18;
-            else if (count < 1200)
+            else if (count < 800)
                 title = ClaimTitle.Status19;
-            else if (count < 1250)
+            else if (count < 850)
                 title = ClaimTitle.Status20;
-            else if (count < 1300)
+            else if (count < 900)
                 title = ClaimTitle.Status21;
-            else if (count < 1400)
+            else if (count < 950)
                 title = ClaimTitle.Status22;
-            else if (count < 1500)
+            else if (count < 1000)
                 title = ClaimTitle.Status23;
-            else if (count < 1550)
+            else if (count < 1111)
                 title = ClaimTitle.Status24;
             else if (count < 1700)
                 title = ClaimTitle.Status25;

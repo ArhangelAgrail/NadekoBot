@@ -233,7 +233,7 @@ namespace NadekoBot.Modules.Gambling
                         var i = curPage * 9;
                         foreach (var w in users)
                         {
-                            embed.AddField(efb => efb.WithName($"#{++i} - " + w.Price + Bc.BotConfig.CurrencySign).WithValue(w.ToString()).WithIsInline(false));
+                            embed.AddField(efb => efb.WithName($"#{++i} - " + w.ToString()).WithValue(Format.Bold(w.Price + Bc.BotConfig.CurrencySign)).WithIsInline(false));
                         }
                         return embed;
                     }
@@ -332,9 +332,12 @@ namespace NadekoBot.Modules.Gambling
                         .GroupBy(x => i++ / 2)
                         .Select(x => string.Join(" ", x)));
 
+                var hero = "";
+                if (itemsStr.Contains("👑")) hero = "👑 ";
+
                 var embed = new EmbedBuilder()
                     .WithColor(16738816)
-                    .WithAuthor(name: GetText("waifu") + " " + wi.FullName + " - \"" + GetText(_service.GetRepTitle(wi.Reputation)) + "\"", iconUrl: target.GetAvatarUrl())
+                    .WithAuthor(name: hero + GetText("waifu") + " " + wi.FullName + " - \"" + GetText(_service.GetRepTitle(wi.Reputation)) + "\"", iconUrl: target.GetAvatarUrl())
                     .AddField(efb => efb.WithName(GetText("price")).WithValue(wi.Price.ToString() + Bc.BotConfig.CurrencySign).WithIsInline(true))
                     //.AddField(efb => efb.WithName(GetText("claimed_by")).WithValue(wi.ClaimerName ?? nobody).WithIsInline(true))
                     //.AddField(efb => efb.WithName(GetText("likes")).WithValue(wi.AffinityName ?? nobody).WithIsInline(true))
@@ -371,7 +374,7 @@ namespace NadekoBot.Modules.Gambling
                                         .OrderBy(x => x.Price)
                                         .Skip(9 * cur)
                                         .Take(9)
-                                        .ForEach(x => embed.AddField(f => f.WithName(x.ItemEmoji + " " + GetText(x.Item.ToString())).WithValue(x.Price).WithIsInline(true)));
+                                        .ForEach(x => embed.AddField(f => f.WithName(x.ItemEmoji + " " + x.Item.ToString()).WithValue(x.Price).WithIsInline(true)));
 
                     return embed;
                 }, Enum.GetValues(typeof(WaifuItem.ItemName)).Length, 9);
@@ -384,7 +387,6 @@ namespace NadekoBot.Modules.Gambling
             {
                 if (waifu.Id == Context.User.Id)
                     return;
-
                 var itemObj = WaifuItem.GetItemObject(item, Bc.BotConfig.WaifuGiftMultiplier);
                 bool sucess = await _service.GiftWaifuAsync(Context.User.Id, waifu, itemObj);
 
