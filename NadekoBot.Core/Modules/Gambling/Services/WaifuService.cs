@@ -457,12 +457,13 @@ namespace NadekoBot.Modules.Gambling.Services
                     });
                 }
                 w.Items.Add(itemObj);
-                if (w.Claimer?.UserId == from)
+                /*if (w.Claimer?.UserId == from)
                 {
                     w.Price += (int)(itemObj.Price * 0.95);
                 }
                 else
-                    w.Price += itemObj.Price / 2;
+                    w.Price += itemObj.Price / 2;*/
+                w.Price += itemObj.Price;
 
                 await uow.CompleteAsync();
             }

@@ -311,7 +311,7 @@
   "customreactions_stats_cleared": "Статистика для пользовательской реакции {0} очищена.",
   "customreactions_stats_not_found": "Статистики для этого активатора не было найдено, никаких действий не применено.",
   "customreactions_trigger": "Активатор",
-  "gambling_about_me": "... напишите что-то о себе - команда .about ☆",
+  "gambling_about_me": "... напишите что-то о себе - команда .about",
   "gambling_animal_race": "Гонка зверей",
   "gambling_animal_race_already_in": "Вы уже участвуете в этой гонке!",
   "gambling_animal_race_already_started": "Гонка зверей уже идёт.",

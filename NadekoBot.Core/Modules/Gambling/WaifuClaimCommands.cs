@@ -343,7 +343,7 @@ namespace NadekoBot.Modules.Gambling
                     //.AddField(efb => efb.WithName(GetText("likes")).WithValue(wi.AffinityName ?? nobody).WithIsInline(true))
                     //.AddField(efb => efb.WithName(GetText("changes_of_heart")).WithValue($"{wi.AffinityCount} - \"{GetText(affInfo)}\"").WithIsInline(true))
                     //.AddField(efb => efb.WithName(GetText("club")).WithValue(clubName).WithIsInline(true))
-                    .AddField(efb => efb.WithName(GetText("reputation")).WithValue("**+" + wi.Reputation.ToString() + "**").WithIsInline(true))
+                    .AddField(efb => efb.WithName(GetText("reputation")).WithValue("**+" + wi.Reputation.ToString() + "** ☆").WithIsInline(true))
                     .AddField(efb => efb.WithName(GetText("on_server")).WithValue(time.Value.Days + GetText("days")).WithIsInline(true))
                     .AddField(efb => efb.WithName(GetText("gifts")).WithValue(itemsStr).WithIsInline(true))
                     .AddField(efb => efb.WithName(GetText("roles", target.RoleIds.Count - 1)).WithValue($"{string.Join("\n", target.GetRoles().Take(10).Where(r => r.Id != r.Guild.EveryoneRole.Id).Select(r => { var id = r.Id; return $"<@&{id}>"; })).SanitizeMentions()}").WithIsInline(true))
