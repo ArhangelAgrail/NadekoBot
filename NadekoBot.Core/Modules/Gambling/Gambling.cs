@@ -91,7 +91,7 @@ namespace NadekoBot.Modules.Gambling
                 }
 
                 await _service.GiveReputation(target, Context.User);
-                await ReplyConfirmLocalized("rep", Format.Bold(target.ToString()), period).ConfigureAwait(false);
+                await ReplyConfirmLocalized("rep", $"<@{target.Id}>", period).ConfigureAwait(false);
             }
             else
                 await ReplyErrorLocalized("self_rep").ConfigureAwait(false);
