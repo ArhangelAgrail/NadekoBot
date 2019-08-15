@@ -72,9 +72,16 @@ namespace NadekoBot.Modules.Gambling
                     var winner = race.FinishedUsers[0];
                     if (race.FinishedUsers[0].Bet > 0)
                     {
+                        var win_amount = 0;
+
+                        foreach (var u in race.FinishedUsers)
+                        {
+                            win_amount += (int)u.Bet;
+                        }
+
                         return Context.Channel.SendConfirmAsync(GetText("animal_race"),
                                             GetText("animal_race_won_money", Format.Bold(winner.Username),
-                                                winner.Animal.Icon, (race.FinishedUsers[0].Bet * (race.Users.Length - 1)) + Bc.BotConfig.CurrencySign));
+                                                winner.Animal.Icon, win_amount + Bc.BotConfig.CurrencySign));
                     }
                     else
                     {

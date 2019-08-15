@@ -140,8 +140,15 @@ namespace NadekoBot.Modules.Gambling.Common.AnimalRacing
                     await Task.Delay(2500).ConfigureAwait(false);
                 }
 
+                var win_amount = 0;
+
+                foreach (var u in FinishedUsers)
+                {
+                    win_amount += (int)u.Bet;
+                }
+
                 if (FinishedUsers[0].Bet > 0)
-                    await _currency.AddAsync(FinishedUsers[0].UserId, "Won a Race", FinishedUsers[0].Bet * (_users.Count - 1))
+                    await _currency.AddAsync(FinishedUsers[0].UserId, "Won a Race", win_amount)
                         .ConfigureAwait(false);
 
                 var _ended = OnEnded?.Invoke(this);
