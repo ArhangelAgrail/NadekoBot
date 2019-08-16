@@ -36,7 +36,7 @@ namespace NadekoBot.Modules.Gambling
             [RequireContext(ContextType.Guild)]
             public async Task About([Remainder] string info = null)
             {
-                if (info.Length > 70)
+                if (info.Length > 256)
                     await ReplyErrorLocalized("info_not_success");
                 else
                 {
@@ -332,12 +332,29 @@ namespace NadekoBot.Modules.Gambling
                         .GroupBy(x => i++ / 2)
                         .Select(x => string.Join(" ", x)));
 
-                var hero = "";
-                if (itemsStr.Contains("👑")) hero = "👑 ";
+                var hero = "Герой";
+                if (itemsStr.Contains("🐲"))
+                    hero = "🐲 Повелитель драконов";
+                else if (itemsStr.Contains("🏰"))
+                    hero = "🏰 Повелитель";
+                else if (itemsStr.Contains("👑"))
+                    hero = "👑 Наследник";
+                else if (itemsStr.Contains("💎"))
+                    hero = "💎 Аристократ";
+                else if (itemsStr.Contains("🦄"))
+                    hero = "🦄 Наездник";
+                else if (itemsStr.Contains("👾"))
+                    hero = "👾 Пришелец";
+                else if (itemsStr.Contains("⚔️"))
+                    hero = "⚔️ Мечник";
+                else if (itemsStr.Contains("🛡️"))
+                    hero = "🛡️ Рыцарь";
+                else if (itemsStr.Contains("🗡️"))
+                    hero = "🗡️ Воин";
 
                 var embed = new EmbedBuilder()
                     .WithColor(16738816)
-                    .WithAuthor(name: hero + GetText("waifu") + " " + wi.FullName + " - \"" + GetText(_service.GetRepTitle(wi.Reputation)) + "\"", iconUrl: target.GetAvatarUrl())
+                    .WithAuthor(name: hero + " " + wi.FullName + " - \"" + GetText(_service.GetRepTitle(wi.Reputation)) + "\"", iconUrl: target.GetAvatarUrl())
                     .AddField(efb => efb.WithName(GetText("price")).WithValue(wi.Price.ToString() + Bc.BotConfig.CurrencySign).WithIsInline(true))
                     //.AddField(efb => efb.WithName(GetText("claimed_by")).WithValue(wi.ClaimerName ?? nobody).WithIsInline(true))
                     //.AddField(efb => efb.WithName(GetText("likes")).WithValue(wi.AffinityName ?? nobody).WithIsInline(true))
@@ -392,7 +409,7 @@ namespace NadekoBot.Modules.Gambling
 
                 if (sucess)
                 {
-                    await ReplyConfirmLocalized("waifu_gift", Format.Bold(GetText(item.ToString()) + " " + itemObj.ItemEmoji), Format.Bold(waifu.ToString()));
+                    await ReplyConfirmLocalized("waifu_gift", Format.Bold(GetText(item.ToString()) + " " + itemObj.ItemEmoji), $"<@{waifu.Id}>");
                 }
                 else
                 {
