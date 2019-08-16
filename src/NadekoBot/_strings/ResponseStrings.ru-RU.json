@@ -366,6 +366,8 @@
   "gambling_flipped": "подброшено {0}",
   "gambling_gifted": "подарил {0} {1}",
   "gambling_gifts": "Инвентарь",
+  "gambling_inventory": "Инвентарь ({0}/{1})",
+  "gambling_backpack": "Рюкзак ({0}/{1})",
   "gambling_Harlot": "Мастер интриг",
   "gambling_has": "У {0} есть {1}",
   "gambling_heads": "Решка",

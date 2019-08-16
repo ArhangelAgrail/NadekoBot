@@ -323,14 +323,39 @@ namespace NadekoBot.Modules.Gambling
 
                 var nobody = GetText("nobody");
                 var i = 0;
-                var itemsStr = !wi.Items.Any()
+
+                var items = wi.Items.OrderBy(x => x.Price).GroupBy(x => x.ItemEmoji);
+                var count = !wi.Items.Any() ? 0 : items.Count();
+
+                var itemsStr1 = !wi.Items.Any()
                     ? "-"
                     : string.Join("\n", wi.Items
                         .OrderBy(x => x.Price)
                         .GroupBy(x => x.ItemEmoji)
-                        .Select(x => $"{x.Key} x{x.Count(),-3}")
+                        .Take(14)
+                        .Select(x => $"{x.Key}x{x.Count(),-3}")
                         .GroupBy(x => i++ / 2)
                         .Select(x => string.Join(" ", x)));
+
+                var itemsStr2 = count < 14 ? "-"
+                    : string.Join("\n", wi.Items
+                        .OrderBy(x => x.Price)
+                        .GroupBy(x => x.ItemEmoji)
+                        .TakeLast(count - 14)
+                        .Select(x => $"{x.Key}x{x.Count(),-3}")
+                        .GroupBy(x => i++ / 2)
+                        .Select(x => string.Join(" ", x)));
+
+                var itemsStr = itemsStr1 + itemsStr2;
+
+                /*var itemsStr = !wi.Items.Any()
+                    ? "-"
+                    : string.Join("\n", wi.Items
+                        .OrderBy(x => x.Price)
+                        .GroupBy(x => x.ItemEmoji)
+                        .Select(x => $"{x.Key}x{x.Count(),-3}")
+                        .GroupBy(x => i++ / 2)
+                        .Select(x => string.Join(" ", x)));*/
 
                 var hero = "Герой";
                 if (itemsStr.Contains("🐲"))
@@ -362,7 +387,8 @@ namespace NadekoBot.Modules.Gambling
                     //.AddField(efb => efb.WithName(GetText("club")).WithValue(clubName).WithIsInline(true))
                     .AddField(efb => efb.WithName(GetText("reputation")).WithValue("**+" + wi.Reputation.ToString() + " ☆**").WithIsInline(true))
                     .AddField(efb => efb.WithName(GetText("on_server")).WithValue(time.Value.Days + GetText("days")).WithIsInline(true))
-                    .AddField(efb => efb.WithName(GetText("gifts")).WithValue(itemsStr).WithIsInline(true))
+                    .AddField(efb => efb.WithName(GetText("inventory", count > 14 ? 14 : count, 14)).WithValue(itemsStr1).WithIsInline(true))
+                    .AddField(efb => efb.WithName(GetText("backpack", count > 14 ? count - 14 : 0, 13)).WithValue(itemsStr2).WithIsInline(true))
                     .AddField(efb => efb.WithName(GetText("roles", target.RoleIds.Count - 1)).WithValue($"{string.Join("\n", target.GetRoles().Take(10).Where(r => r.Id != r.Guild.EveryoneRole.Id).Select(r => { var id = r.Id; return $"<@&{id}>"; })).SanitizeMentions()}").WithIsInline(true))
                     //.AddField(efb => efb.WithName(GetText("Waifus", wi.ClaimCount)).WithValue(wi.ClaimCount == 0 ? nobody + "\n_______" : string.Join("\n", wi.Claims30) + "\n_______").WithIsInline(false))
                     .WithTitle(info);
