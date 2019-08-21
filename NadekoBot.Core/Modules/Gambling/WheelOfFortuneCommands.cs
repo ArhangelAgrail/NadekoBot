@@ -95,7 +95,7 @@ Format.Bold($@"{Context.User.Mention} won: {result.Amount + Bc.BotConfig.Currenc
 
                             using (var CenterEmoji = Image.Load(_images.WheelEmojis[8]))
                             {
-                                bgImage.Mutate(x => x.DrawImage(GraphicsOptions.Default, CenterEmoji, new Point(111, 111)));
+                                bgImage.Mutate(x => x.DrawImage(GraphicsOptions.Default, CenterEmoji, new Point(120, 120)));
                             }
                         }
 
