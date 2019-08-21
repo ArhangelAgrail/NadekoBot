@@ -16,6 +16,7 @@ namespace NadekoBot.Core.Common
         //new
         public RipData Rip { get; set; }
         public SlotData Slots { get; set; }
+        public WheelData Wheel { get; set; }
 
         public class RipData
         {
@@ -27,6 +28,12 @@ namespace NadekoBot.Core.Common
         {
             public Uri[] Emojis { get; set; }
             public Uri[] Numbers { get; set; }
+            public Uri Bg { get; set; }
+        }
+
+        public class WheelData
+        {
+            public Uri[] Emojis { get; set; }
             public Uri Bg { get; set; }
         }
 
