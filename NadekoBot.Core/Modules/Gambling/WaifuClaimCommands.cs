@@ -431,11 +431,11 @@ namespace NadekoBot.Modules.Gambling
                 if (waifu.Id == Context.User.Id)
                     return;
                 var itemObj = WaifuItem.GetItemObject(item, Bc.BotConfig.WaifuGiftMultiplier);
-                bool sucess = await _service.GiftWaifuAsync(Context.User.Id, waifu, itemObj);
+                int sucess = await _service.GiftWaifuAsync(Context.User.Id, waifu, itemObj);
 
-                if (sucess)
+                if (sucess != 0)
                 {
-                    await ReplyConfirmLocalized("waifu_gift", Format.Bold(GetText(item.ToString()) + " " + itemObj.ItemEmoji), $"<@{waifu.Id}>");
+                    await ReplyConfirmLocalized("waifu_gift", Format.Bold(GetText(item.ToString()) + " " + itemObj.ItemEmoji), waifu.Mention, Format.Bold(String.Format("{0:#,0}", sucess) + Bc.BotConfig.CurrencySign));
                 }
                 else
                 {

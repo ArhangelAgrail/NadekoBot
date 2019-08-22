@@ -435,11 +435,12 @@ namespace NadekoBot.Modules.Gambling.Services
             return (w, result, amount, remaining);
         }
 
-        public async Task<bool> GiftWaifuAsync(ulong from, IUser giftedWaifu, WaifuItem itemObj)
+        public async Task<int> GiftWaifuAsync(ulong from, IUser giftedWaifu, WaifuItem itemObj)
         {
+            var Mosh = 0;
             if (!await _cs.RemoveAsync(from, "Bought waifu item", itemObj.Price, gamble: true))
             {
-                return false;
+                return Mosh;
             }
 
             using (var uow = _db.UnitOfWork)
@@ -464,10 +465,11 @@ namespace NadekoBot.Modules.Gambling.Services
                 else
                     w.Price += itemObj.Price / 2;*/
                 w.Price += itemObj.Price;
+                Mosh = w.Price;
 
                 await uow.CompleteAsync();
             }
-            return true;
+            return Mosh;
         }
 
         /*public async Task<bool> GiftWaifuAsync(ulong from, int count, IUser giftedWaifu, WaifuItem itemObj)
