@@ -148,7 +148,7 @@ namespace NadekoBot.Modules.Gambling.Services
             using (var img = Image.Load(curImg, out var format))
             {
                 // choose font size based on the image height, so that it's visible
-                var font = _fonts.NotoSans.CreateFont(img.Height / 10, FontStyle.Bold);
+                var font = _fonts.NotoSans.CreateFont(img.Height / 2, FontStyle.Bold);
                 img.Mutate(x =>
                 {
                     // measure the size of the text to be drawing
