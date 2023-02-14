@@ -172,7 +172,7 @@ namespace NadekoBot.Modules.Gambling.Services
                         new PointF(size.Width + 5, (float)random.NextDouble() * size.Height));
 
                     // draw the password over the background
-                    x.DrawText(pass,
+                    x.DrawText($".pick {pass}",
                         font,
                         Brushes.Solid(Rgba32.White),
                         new PointF(0, 0));
