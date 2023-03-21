@@ -98,6 +98,15 @@ namespace NadekoBot.Modules.Gambling
                     return;
                 }
 
+                var embed = new EmbedBuilder()
+                        .WithTitle(GetText("shop_purchase_confirm"))
+                        .WithDescription(Format.Code(entry.Name));
+
+                if (!await PromptUserConfirmAsync(embed).ConfigureAwait(false))
+                {
+                    return;
+                }
+
                 if (entry.Type == ShopEntryType.Role)
                 {
                     var guser = (IGuildUser)Context.User;

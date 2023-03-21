@@ -440,6 +440,7 @@
   "gambling_shop_role_not_found": "Роль, которая была продана, больше не существует.",
   "gambling_shop_role_purchase": "Вы успешно купили роль {0}.",
   "gambling_shop_role_purchase_error": "Ошибка при выдаче роли. Ваша покупка была сброшена.",
+  "gambling_shop_purchase_confirm": "Вы уверенны, что хотите купить именно этот промокод?",
   "gambling_Sloot": "Ищу свое",
   "gambling_slot_bet": "Ставка",
   "gambling_slot_jackpot": "НИЧЕГО СЕБЕ!!! Поздраляем!!! x{0}",
