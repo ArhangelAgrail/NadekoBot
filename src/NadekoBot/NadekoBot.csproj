@@ -32,6 +32,9 @@
     <None Update="_strings\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="credentials.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="data\images_backup.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
