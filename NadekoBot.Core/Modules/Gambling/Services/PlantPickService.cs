@@ -152,7 +152,7 @@ namespace NadekoBot.Modules.Gambling.Services
                 img.Mutate(x =>
                 {
                     // measure the size of the text to be drawing
-                    var size = TextMeasurer.Measure(pass, new RendererOptions(font, new PointF(0, 0)));
+                    var size = TextMeasurer.Measure($".pick {pass}", new RendererOptions(font, new PointF(0, 0)));
 
                     // fill the background with black, add 5 pixels on each side to make it look better
                     x.FillPolygon(Rgba32.FromHex("00000080"),
@@ -162,14 +162,6 @@ namespace NadekoBot.Modules.Gambling.Services
                         new PointF(0, size.Height + 10));
 
                     Random random = new Random();
-
-                    x.DrawLines(Brushes.Solid(Rgba32.White), 2, 
-                        new PointF(0, (float)random.NextDouble() * size.Height), 
-                        new PointF(size.Width + 5, (float)random.NextDouble() * size.Height));
-
-                    x.DrawLines(Brushes.Solid(Rgba32.White), 2,
-                        new PointF(0, (float)random.NextDouble() * size.Height),
-                        new PointF(size.Width + 5, (float)random.NextDouble() * size.Height));
 
                     // draw the password over the background
                     x.DrawText($".pick {pass}",
