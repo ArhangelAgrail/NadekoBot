@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NadekoBot.Common;
 using NadekoBot.Common.Attributes;
 using NadekoBot.Common.Collections;
 using NadekoBot.Core.Services;
 using NadekoBot.Core.Services.Database.Models;
 using NadekoBot.Extensions;
+using static NadekoBot.Modules.Xp.Xp;
 
 namespace NadekoBot.Modules.Gambling
 {
@@ -23,6 +27,7 @@ namespace NadekoBot.Modules.Gambling
             private readonly DbService _db;
             private readonly ICurrencyService _cs;
             private readonly DiscordSocketClient _client;
+            private readonly IHttpClientFactory _httpFactory;
 
             public enum Role
             {
@@ -63,15 +68,56 @@ namespace NadekoBot.Modules.Gambling
                         return new EmbedBuilder().WithErrorColor()
                             .WithDescription(GetText("shop_none"));
                     var embed = new EmbedBuilder().WithOkColor()
-                        .WithTitle(GetText("shop", Bc.BotConfig.CurrencySign));
+                        .WithTitle(GetText("shop"))
+                        .WithDescription(GetText("shop_desc"));
 
                     for (int i = 0; i < theseEntries.Length; i++)
                     {
                         var entry = theseEntries[i];
-                        embed.AddField(efb => efb.WithName($"#{curPage * 9 + i + 1} - {entry.Price}{Bc.BotConfig.CurrencySign}").WithValue(EntryToString(entry)).WithIsInline(true));
+                        embed.AddField(efb => efb.WithName(GetText("shop_item_title", curPage * 9 + i + 1, entry.Name, entry.ItemName)).WithValue(GetText("shop_item_desc", EntryToString(entry), entry.Price, Bc.BotConfig.CurrencySign)).WithIsInline(true));
                     }
                     return embed;
                 }, entries.Count, 9, true).ConfigureAwait(false);
+            }
+
+            [NadekoCommand, Usage, Description, Aliases]
+            [RequireContext(ContextType.Guild)]
+            public async Task ShopDesc(int page = 1)
+            {
+                if (--page < 0)
+                    return;
+                List<ShopEntry> entries;
+                using (var uow = _db.UnitOfWork)
+                {
+                    entries = new IndexedCollection<ShopEntry>(uow.GuildConfigs.ForId(Context.Guild.Id,
+                        set => set.Include(x => x.ShopEntries)
+                                  .ThenInclude(x => x.Items)).ShopEntries);
+                }
+
+                await Context.SendPaginatedConfirmAsync(page, (curPage) =>
+                {
+                    var theseEntries = entries.Skip(curPage).Take(1).ToArray();
+                    var entry = theseEntries[0];
+
+                    if (!theseEntries.Any())
+                        return new EmbedBuilder().WithErrorColor()
+                            .WithDescription(GetText("shop_none"));
+
+                    var itemDescription = entry.Description.Split(';');
+
+                    var embed = new EmbedBuilder()
+                            .WithTitle(GetText("shop_purchase_title", entry.Name))
+                            .WithAuthor(GetText("shop_purchase_author", curPage+1, entry.ItemName))
+                            .WithDescription(GetText("shop_purchase_desc", string.Join("\n", itemDescription.Select(x => $"- {x}"))))
+                            .AddField(GetText("shop_purchase_field_title"), GetText("shop_purchase_field_desc", entry.Price, Bc.BotConfig.CurrencySign, curPage+1, EntryToString(entry)), true);
+
+                    if (Uri.IsWellFormedUriString(entry.ItemLogoUrl, UriKind.Absolute))
+                        embed.WithThumbnailUrl(entry.ItemLogoUrl);
+                    if (Uri.IsWellFormedUriString(entry.ItemImageUrl, UriKind.Absolute))
+                        embed.WithImageUrl(entry.ItemImageUrl);
+
+                    return embed;
+                }, entries.Count, 1, true).ConfigureAwait(false);
             }
 
             [NadekoCommand, Usage, Description, Aliases]
@@ -98,9 +144,18 @@ namespace NadekoBot.Modules.Gambling
                     return;
                 }
 
+                var itemDescription = entry.Description.Split(';');
+
                 var embed = new EmbedBuilder()
-                        .WithTitle(GetText("shop_purchase_confirm"))
-                        .WithDescription(Format.Code(entry.Name));
+                        .WithTitle(GetText("shop_purchase_title", entry.Name))
+                        .WithAuthor(GetText("shop_purchase_author", index+1, entry.ItemName))
+                        .WithDescription(GetText("shop_purchase_desc", string.Join("\n", itemDescription.Select(x => $"- {x}"))))
+                        .AddField(GetText("shop_purchase_confirm_title", entry.ItemName), GetText("shop_purchase_confirm_desc"), true);
+                 
+                if (Uri.IsWellFormedUriString(entry.ItemLogoUrl, UriKind.Absolute))
+                    embed.WithThumbnailUrl(entry.ItemLogoUrl);
+                if (Uri.IsWellFormedUriString(entry.ItemImageUrl, UriKind.Absolute))
+                    embed.WithImageUrl(entry.ItemImageUrl);
 
                 if (!await PromptUserConfirmAsync(embed).ConfigureAwait(false))
                 {
@@ -147,7 +202,7 @@ namespace NadekoBot.Modules.Gambling
                 {
                     if (entry.Items.Count == 0)
                     {
-                        await ReplyErrorLocalized("out_of_stock").ConfigureAwait(false);
+                        await ReplyErrorLocalized("shop_out_of_stock").ConfigureAwait(false);
                         return;
                     }
 
@@ -165,9 +220,8 @@ namespace NadekoBot.Modules.Gambling
                             await (await Context.User.GetOrCreateDMChannelAsync().ConfigureAwait(false))
                                 .EmbedAsync(new EmbedBuilder().WithOkColor()
                                 .WithTitle(GetText("shop_purchase", Context.Guild.Name))
-                                .AddField(efb => efb.WithName(GetText("shop_item")).WithValue(item.Text).WithIsInline(false))
-                                .AddField(efb => efb.WithName(GetText("shop_price")).WithValue(entry.Price.ToString()).WithIsInline(true))
-                                .AddField(efb => efb.WithName(GetText("shop_name")).WithValue(entry.Name).WithIsInline(true)))
+                                .AddField(efb => efb.WithName(GetText("shop_item", entry.ItemName)).WithValue(item.Text).WithIsInline(false))
+                                .AddField(efb => efb.WithName(entry.Name).WithValue(entry.Description).WithIsInline(true)))
                                 .ConfigureAwait(false);
 
                             await _cs.AddAsync(entry.AuthorId,
@@ -310,6 +364,127 @@ namespace NadekoBot.Modules.Gambling
             [NadekoCommand, Usage, Description, Aliases]
             [RequireContext(ContextType.Guild)]
             [RequireUserPermission(GuildPermission.Administrator)]
+            public async Task ShopItemDesc(int index, [Remainder] string desc)
+            {
+                index -= 1;
+                if (index < 0)
+                    return;
+
+                using (var uow = _db.UnitOfWork)
+                {
+                    var entry = uow.GuildConfigs.ForId(Context.Guild.Id, set => set
+                        .Include(x => x.ShopEntries));
+                    if (entry == null)
+                        return;
+
+                    entry.ShopEntries[index].Description = desc;
+                    uow.Complete();
+                }
+
+                await ReplyConfirmLocalized("shop_info_updated", desc).ConfigureAwait(false);
+            }
+
+            [NadekoCommand, Usage, Description, Aliases]
+            [RequireContext(ContextType.Guild)]
+            [RequireUserPermission(GuildPermission.Administrator)]
+            public async Task ShopItemName(int index, [Remainder] string name)
+            {
+                index -= 1;
+                if (index < 0)
+                    return;
+
+                using (var uow = _db.UnitOfWork)
+                {
+                    var entry = uow.GuildConfigs.ForId(Context.Guild.Id, set => set
+                        .Include(x => x.ShopEntries));
+                    if (entry == null)
+                        return;
+
+                    entry.ShopEntries[index].ItemName = name;
+                    uow.Complete();
+                }
+
+                await ReplyConfirmLocalized("shop_info_updated", name).ConfigureAwait(false);
+            }
+
+            [NadekoCommand, Usage, Description, Aliases]
+            [RequireContext(ContextType.Guild)]
+            [RequireUserPermission(GuildPermission.Administrator)]
+            public async Task ShopItemLogo(int index, [Remainder] string url = null)
+            {
+                index -= 1;
+                if (index < 0)
+                    return;
+
+                if (!Uri.IsWellFormedUriString(url, UriKind.Absolute) && url != null)
+                { return; }
+
+                using (var uow = _db.UnitOfWork)
+                {
+                    var entry = uow.GuildConfigs.ForId(Context.Guild.Id, set => set
+                        .Include(x => x.ShopEntries));
+                    if (entry == null)
+                        return;
+
+                    entry.ShopEntries[index].ItemLogoUrl = url;
+                    uow.Complete();
+                }
+
+                await ReplyConfirmLocalized("shop_info_updated", url).ConfigureAwait(false);
+            }
+
+            [NadekoCommand, Usage, Description, Aliases]
+            [RequireContext(ContextType.Guild)]
+            [RequireUserPermission(GuildPermission.Administrator)]
+            public async Task ShopItemImage(int index, [Remainder] string url = null)
+            {
+                index -= 1;
+                if (index < 0)
+                    return;
+
+                if (!Uri.IsWellFormedUriString(url, UriKind.Absolute) && url != null)
+                { return; }
+
+                using (var uow = _db.UnitOfWork)
+                {
+                    var entry = uow.GuildConfigs.ForId(Context.Guild.Id, set => set
+                        .Include(x => x.ShopEntries));
+                    if (entry == null)
+                        return;
+
+                    entry.ShopEntries[index].ItemImageUrl = url;
+                    uow.Complete();
+                }
+
+                await ReplyConfirmLocalized("shop_info_updated", url).ConfigureAwait(false);
+            }
+
+            [NadekoCommand, Usage, Description, Aliases]
+            [RequireContext(ContextType.Guild)]
+            [RequireUserPermission(GuildPermission.Administrator)]
+            public async Task ShopItemPrice(int index, int price)
+            {
+                index -= 1;
+                if (index < 0)
+                    return;
+
+                using (var uow = _db.UnitOfWork)
+                {
+                    var entry = uow.GuildConfigs.ForId(Context.Guild.Id, set => set
+                        .Include(x => x.ShopEntries));
+                    if (entry == null)
+                        return;
+
+                    entry.ShopEntries[index].Price = price;
+                    uow.Complete();
+                }
+
+                await ReplyConfirmLocalized("shop_info_updated", price).ConfigureAwait(false);
+            }
+
+            [NadekoCommand, Usage, Description, Aliases]
+            [RequireContext(ContextType.Guild)]
+            [RequireUserPermission(GuildPermission.Administrator)]
             public async Task ShopRemove(int index)
             {
                 index -= 1;
@@ -366,7 +541,7 @@ namespace NadekoBot.Modules.Gambling
                 }
                 else if (entry.Type == ShopEntryType.List)
                 {
-                    return GetText("unique_items_left", entry.Items.Count) + "\n" + entry.Name;
+                    return GetText("unique_items_left", entry.Items.Count);
                 }
                 //else if (entry.Type == ShopEntryType.Infinite_List)
                 //{

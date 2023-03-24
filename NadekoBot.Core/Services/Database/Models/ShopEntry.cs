@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Octokit;
+using System;
 using System.Collections.Generic;
 
 namespace NadekoBot.Core.Services.Database.Models
@@ -24,6 +25,10 @@ namespace NadekoBot.Core.Services.Database.Models
         public ulong RoleId { get; set; }
 
         //list
+        public string Description { get; set; }
+        public string ItemName { get; set; }
+        public string ItemLogoUrl { get; set; } = "";
+        public string ItemImageUrl { get; set; } = "";
         public HashSet<ShopEntryItem> Items { get; set; } = new HashSet<ShopEntryItem>();
     }
 

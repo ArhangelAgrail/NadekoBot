@@ -90,8 +90,7 @@ namespace NadekoBot.Modules
 
         public async Task<bool> PromptUserConfirmAsync(EmbedBuilder embed)
         {
-            embed.WithOkColor()
-                .WithFooter("yes/no");
+            embed.WithOkColor();
 
             var msg = await Context.Channel.EmbedAsync(embed).ConfigureAwait(false);
             try
@@ -121,7 +120,7 @@ namespace NadekoBot.Modules
             {
                 dsc.MessageReceived += MessageReceived;
 
-                if ((await Task.WhenAny(userInputTask.Task, Task.Delay(10000)).ConfigureAwait(false)) != userInputTask.Task)
+                if ((await Task.WhenAny(userInputTask.Task, Task.Delay(30000)).ConfigureAwait(false)) != userInputTask.Task)
                 {
                     return null;
                 }
