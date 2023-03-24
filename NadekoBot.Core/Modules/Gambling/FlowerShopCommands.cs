@@ -226,7 +226,7 @@ namespace NadekoBot.Modules.Gambling
                                 .ConfigureAwait(false);
 
                             await _cs.AddAsync(entry.AuthorId,
-                                    $"Shop sell item - {entry.Name}",
+                                    $"Shop sell item - {entry.Name} : {entry.ItemName}",
                                     GetProfitAmount(entry.Price)).ConfigureAwait(false);
                         }
                         catch
