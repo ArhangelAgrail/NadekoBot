@@ -217,11 +217,12 @@ namespace NadekoBot.Modules.Gambling
                         }
                         try
                         {
+                            var itemDesc = entry.Description.Split(';');
                             await (await Context.User.GetOrCreateDMChannelAsync().ConfigureAwait(false))
                                 .EmbedAsync(new EmbedBuilder().WithOkColor()
                                 .WithTitle(GetText("shop_purchase", Context.Guild.Name))
                                 .AddField(efb => efb.WithName(GetText("shop_item", entry.ItemName)).WithValue(item.Text).WithIsInline(false))
-                                .AddField(efb => efb.WithName(entry.Name).WithValue(entry.Description).WithIsInline(true)))
+                                .AddField(efb => efb.WithName(entry.Name).WithValue(string.Join("\n", itemDescription.Select(x => $"- {x}"))).WithIsInline(true)))
                                 .ConfigureAwait(false);
 
                             await _cs.AddAsync(entry.AuthorId,

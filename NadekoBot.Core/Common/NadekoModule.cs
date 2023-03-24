@@ -98,7 +98,7 @@ namespace NadekoBot.Modules
                 var input = await GetUserInputAsync(Context.User.Id, Context.Channel.Id).ConfigureAwait(false);
                 input = input?.ToUpperInvariant();
 
-                if (input != "YES" && input != "Y")
+                if (input != "YES" && input != "Y" && input != "ДА")
                 {
                     return false;
                 }
