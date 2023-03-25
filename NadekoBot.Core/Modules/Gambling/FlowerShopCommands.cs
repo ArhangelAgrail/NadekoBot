@@ -208,7 +208,7 @@ namespace NadekoBot.Modules.Gambling
 
                     var item = entry.Items.ToArray()[new NadekoRandom().Next(0, entry.Items.Count)];
 
-                    if (await _cs.RemoveAsync(Context.User.Id, $"Shop purchase - {entry.Type}", entry.Price).ConfigureAwait(false))
+                    if (await _cs.RemoveAsync(Context.User.Id, $"Shop purchase - {entry.Type} : {entry.Name} : {entry.ItemName}", entry.Price).ConfigureAwait(false))
                     {
                         using (var uow = _db.UnitOfWork)
                         {
@@ -224,6 +224,8 @@ namespace NadekoBot.Modules.Gambling
                                 .AddField(efb => efb.WithName(GetText("shop_item", entry.ItemName)).WithValue(item.Text).WithIsInline(false))
                                 .AddField(efb => efb.WithName(entry.Name).WithValue(string.Join("\n", itemDescription.Select(x => $"- {x}"))).WithIsInline(true)))
                                 .ConfigureAwait(false);
+
+                            await (await Context.User.GetOrCreateDMChannelAsync().ConfigureAwait(false)).SendMessageAsync(item.Text);
 
                             await _cs.AddAsync(entry.AuthorId,
                                     $"Shop sell item - {entry.Name} : {entry.ItemName}",
@@ -251,7 +253,7 @@ namespace NadekoBot.Modules.Gambling
                             await ReplyErrorLocalized("shop_buy_error").ConfigureAwait(false);
                             return;
                         }
-                        await ReplyConfirmLocalized("shop_item_purchase").ConfigureAwait(false);
+                        await ReplyConfirmLocalized("shop_item_purchase", entry.Name, entry.ItemName).ConfigureAwait(false);
                     }
                     else
                     {
