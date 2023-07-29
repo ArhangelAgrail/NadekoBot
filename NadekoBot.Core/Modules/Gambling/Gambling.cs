@@ -709,9 +709,9 @@ namespace NadekoBot.Modules.Gambling
                     case RpsPick.R:
                         return "🪨";
                     case RpsPick.P:
-                        return "📎";
-                    default:
                         return "📄";
+                    default:
+                        return "✂️";
                 }
             }
             var embed = new EmbedBuilder();
