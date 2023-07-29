@@ -707,11 +707,11 @@ namespace NadekoBot.Modules.Gambling
                 switch (p)
                 {
                     case RpsPick.R:
-                        return "🚀";
+                        return "🪨";
                     case RpsPick.P:
                         return "📎";
                     default:
-                        return "✂️";
+                        return "📄";
                 }
             }
             var embed = new EmbedBuilder();
@@ -744,7 +744,7 @@ namespace NadekoBot.Modules.Gambling
                 await _cs.AddAsync(Context.User.Id,
                     "Rps-win", amount, gamble: true).ConfigureAwait(false);
                 embed.WithOkColor();
-                embed.AddField(GetText("won"), amount);
+                embed.AddField(GetText("won"), amount + CurrencySign);
                 msg = GetText("rps_win", Context.User.Mention,
                     getRpsPick(pick), getRpsPick(nadekoPick));
             }
