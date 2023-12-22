@@ -62,7 +62,7 @@ namespace NadekoBot.Modules.Gambling
 
                 await Context.SendPaginatedConfirmAsync(page, (curPage) =>
                 {
-                    var theseEntries = entries.Skip(curPage * 9).Take(9).ToArray();
+                    var theseEntries = entries.Skip(curPage * 12).Take(12).ToArray();
 
                     if (!theseEntries.Any())
                         return new EmbedBuilder().WithErrorColor()
@@ -74,10 +74,10 @@ namespace NadekoBot.Modules.Gambling
                     for (int i = 0; i < theseEntries.Length; i++)
                     {
                         var entry = theseEntries[i];
-                        embed.AddField(efb => efb.WithName(GetText("shop_item_title", curPage * 9 + i + 1, entry.Name, entry.ItemName)).WithValue(GetText("shop_item_desc", EntryToString(entry), entry.Price, Bc.BotConfig.CurrencySign)).WithIsInline(true));
+                        embed.AddField(efb => efb.WithName(GetText("shop_item_title", curPage * 12 + i + 1, entry.Name, entry.ItemName)).WithValue(GetText("shop_item_desc", EntryToString(entry), entry.Price, Bc.BotConfig.CurrencySign)).WithIsInline(true));
                     }
                     return embed;
-                }, entries.Count, 9, true).ConfigureAwait(false);
+                }, entries.Count, 12, true).ConfigureAwait(false);
             }
 
             [NadekoCommand, Usage, Description, Aliases]
