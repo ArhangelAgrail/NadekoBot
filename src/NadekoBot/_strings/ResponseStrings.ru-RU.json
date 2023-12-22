@@ -437,7 +437,7 @@
   "gambling_shop_item": "Промокод для {0}",
   "gambling_shop_name": "Описание промокода",
   "gambling_shop_purchase": "Получен промокод ({0})",
-  "gambling_shop_item_title": "#{0}: {1} для {2}",
+  "gambling_shop_item_title": "{0}: {1} для {2}",
   "gambling_shop_item_desc": "{0} стоимостью **{1}**{2}",
   "gambling_shop_purchase_title": "➣  {0}",
   "gambling_shop_purchase_author": "Промокод #{0} для {1}",
