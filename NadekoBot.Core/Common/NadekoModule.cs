@@ -120,7 +120,7 @@ namespace NadekoBot.Modules
             {
                 dsc.MessageReceived += MessageReceived;
 
-                if ((await Task.WhenAny(userInputTask.Task, Task.Delay(30000)).ConfigureAwait(false)) != userInputTask.Task)
+                if ((await Task.WhenAny(userInputTask.Task, Task.Delay(50000)).ConfigureAwait(false)) != userInputTask.Task)
                 {
                     return null;
                 }
